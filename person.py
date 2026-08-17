@@ -7,7 +7,7 @@ class Person:
         age (int): The age of the person.
     """
 
-    def __init__(self, name, age):
+    def __init__(self, name, age):    #constructor
         """
         Initializes the Person object.
 
@@ -18,9 +18,9 @@ class Person:
         self.name = name
         self.age = age
 
-    def view_info(self):
+    def view_info(self):             #method
         """
-    View basic information about the person.
+        View basic information about the person.
 
         Returns:
             str: The person's name and age.

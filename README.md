@@ -45,7 +45,7 @@ This project was developed as a team project.
 - Gehad Magdy
 - Hadeer ossama 
 - Shimaa Atef
-- Rawan 
+- Rawan Gamal
 
 ## 🚀 How to Run
 

@@ -42,8 +42,8 @@ This project was developed as a team project.
 
 - Menna T-Allah Nasr
 - Mariam Ahmed
-- Ghad Magdy 
-- Hadder osama
+- Gehad Magdy 
+- Hadder Osama
 - Shimaa Atef
 - Rawan Gamal
 

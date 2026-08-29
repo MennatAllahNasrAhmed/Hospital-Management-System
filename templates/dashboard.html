@@ -1,0 +1,247 @@
+{% extends "base.html" %}
+
+{% block title %}Dashboard{% endblock %}
+
+{% block content %}
+
+<div class="page-heading">
+
+    <div>
+        <p class="eyebrow">OVERVIEW</p>
+
+        <h1>Good morning, Admin 👋</h1>
+
+        <p>
+            Here's what's happening in your hospital today.
+        </p>
+    </div>
+
+    <div class="date-chip">
+        📅 25 Aug 2026
+    </div>
+
+</div>
+
+
+<div class="stats-grid">
+
+    <div class="stat-card">
+
+        <div class="stat-top">
+            <span>Total Patients</span>
+
+            <div class="stat-icon blue">
+                ♙
+            </div>
+        </div>
+
+        <strong>{{ patients|length }}</strong>
+
+        <small>
+            ↑ 12%
+            <em>from last month</em>
+        </small>
+
+    </div>
+
+
+    <div class="stat-card">
+
+        <div class="stat-top">
+            <span>Medical Staff</span>
+
+            <div class="stat-icon purple">
+                ♧
+            </div>
+        </div>
+
+        <strong>{{ staff|length }}</strong>
+
+        <small>
+            ↑ 8%
+            <em>from last month</em>
+        </small>
+
+    </div>
+
+
+    <div class="stat-card">
+
+        <div class="stat-top">
+            <span>Departments</span>
+
+            <div class="stat-icon green">
+                ▤
+            </div>
+        </div>
+
+        <strong>{{ departments|length }}</strong>
+
+        <small>
+            Stable
+            <em>this month</em>
+        </small>
+
+    </div>
+
+
+    <div class="stat-card">
+
+        <div class="stat-top">
+            <span>Critical Cases</span>
+
+            <div class="stat-icon red">
+                ♥
+            </div>
+        </div>
+
+        <strong>
+            {{ patients|selectattr('status', 'equalto', 'Critical')|list|length }}
+        </strong>
+
+        <small class="danger">
+            Needs attention
+        </small>
+
+    </div>
+
+</div>
+
+
+<div class="grid-2">
+
+    <!-- Recent Patients -->
+
+    <div class="panel">
+
+        <div class="panel-head">
+
+            <div>
+                <h2>Recent Patients</h2>
+                <p>Latest patient records</p>
+            </div>
+
+            <a href="{{ url_for('patients_page') }}">
+                View all →
+            </a>
+
+        </div>
+
+
+        <div class="table-wrap">
+
+            <table>
+
+                <thead>
+                    <tr>
+                        <th>Patient</th>
+                        <th>Department</th>
+                        <th>Status</th>
+                    </tr>
+                </thead>
+
+
+                <tbody>
+
+                    {% for p in patients[:5] %}
+
+                    <tr data-search="{{ p.name }} {{ p.department }}">
+
+                        <td>
+
+                            <div class="person">
+
+                                <div class="avatar">
+                                    {{ p.name[0] }}
+                                </div>
+
+                                <div>
+                                    <strong>{{ p.name }}</strong>
+                                    <small>Age {{ p.age }}</small>
+                                </div>
+
+                            </div>
+
+                        </td>
+
+
+                        <td>
+                            {{ p.department }}
+                        </td>
+
+
+                        <td>
+
+                            <span class="badge {{ p.status|lower }}">
+                                {{ p.status }}
+                            </span>
+
+                        </td>
+
+                    </tr>
+
+                    {% endfor %}
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+    </div>
+
+
+    <!-- Departments -->
+
+    <div class="panel">
+
+        <div class="panel-head">
+
+            <div>
+                <h2>Departments</h2>
+                <p>Current hospital departments</p>
+            </div>
+
+            <a href="{{ url_for('departments_page') }}">
+                Manage →
+            </a>
+
+        </div>
+
+
+        {% for d in departments %}
+
+        <div class="dept-row" data-search="{{ d.name }}">
+
+            <div class="dept-avatar">
+                {{ d.name[0] }}
+            </div>
+
+
+            <div class="dept-info">
+
+                <strong>
+                    {{ d.name }}
+                </strong>
+
+                <span>
+                    {{ d.patients }} patients · {{ d.staff }} staff
+                </span>
+
+            </div>
+
+
+            <span>
+                ›
+            </span>
+
+        </div>
+
+        {% endfor %}
+
+    </div>
+
+</div>
+
+{% endblock %}
+

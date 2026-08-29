@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}MediCare{% endblock %} | Hospital Management</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+</head>
+<body>
+<div class="app-shell">
+    <aside class="sidebar">
+        <div class="brand">
+            <div class="brand-icon">✚</div>
+            <div><strong>MediCare</strong><span>Hospital System</span></div>
+        </div>
+
+        <div class="menu-label">MAIN MENU</div>
+        <nav>
+            <a class="{{ 'active' if active == 'dashboard' else '' }}" href="{{ url_for('dashboard') }}"><span>▦</span> Dashboard</a>
+            <a class="{{ 'active' if active == 'patients' else '' }}" href="{{ url_for('patients_page') }}"><span>♙</span> Patients</a>
+            <a class="{{ 'active' if active == 'staff' else '' }}" href="{{ url_for('staff_page') }}"><span>♧</span> Staff</a>
+            <a class="{{ 'active' if active == 'departments' else '' }}" href="{{ url_for('departments_page') }}"><span>▤</span> Departments</a>
+        </nav>
+
+        <div class="sidebar-bottom">
+            <div class="help-card">
+                <div class="help-icon">?</div>
+                <strong>Need help?</strong>
+                <p>Manage your hospital data easily.</p>
+            </div>
+            <div class="profile-mini">
+                <div class="avatar">A</div>
+                <div><strong>Admin</strong><small>Administrator</small></div>
+            </div>
+        </div>
+    </aside>
+
+    <main class="main">
+        <header class="topbar">
+            <button class="mobile-menu" onclick="document.querySelector('.sidebar').classList.toggle('open')">☰</button>
+            <div class="search"><span>⌕</span><input id="globalSearch" placeholder="Search anything..."></div>
+            <div class="top-actions"><button class="icon-btn">🔔<i></i></button><div class="top-avatar">A</div></div>
+        </header>
+
+        {% with messages = get_flashed_messages(with_categories=true) %}
+          {% if messages %}
+            {% for category, message in messages %}
+              <div class="flash {{ category }}">{{ message }}</div>
+            {% endfor %}
+          {% endif %}
+        {% endwith %}
+
+        <section class="content">
+            {% block content %}{% endblock %}
+        </section>
+    </main>
+</div>
+<script>
+setTimeout(() => document.querySelectorAll('.flash').forEach(x => x.remove()), 3500);
+document.getElementById('globalSearch')?.addEventListener('input', function() {
+    const q = this.value.toLowerCase();
+    document.querySelectorAll('[data-search]').forEach(el => {
+        el.style.display = el.dataset.search.toLowerCase().includes(q) ? '' : 'none';
+    });
+});
+</script>
+</body>
+</html>

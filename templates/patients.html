@@ -1,0 +1,258 @@
+{% extends "base.html" %}
+
+{% block title %}Patients{% endblock %}
+
+{% block content %}
+
+<div class="page-heading">
+
+    <div>
+        <p class="eyebrow">MANAGEMENT</p>
+
+        <h1>Patients</h1>
+
+        <p>
+            View and manage all patient records.
+        </p>
+    </div>
+
+    <button
+        class="primary"
+        onclick="openModal('patientModal')">
+        + Add Patient
+    </button>
+
+</div>
+
+
+<div class="panel">
+
+    <div class="panel-head">
+
+        <div>
+            <h2>Patient Records</h2>
+
+            <p>
+                {{ patients|length }} registered patients
+            </p>
+        </div>
+
+    </div>
+
+
+    <div class="table-wrap">
+
+        <table>
+
+            <thead>
+
+                <tr>
+                    <th>Patient</th>
+                    <th>Age</th>
+                    <th>Department</th>
+                    <th>Medical Record</th>
+                    <th>Status</th>
+                </tr>
+
+            </thead>
+
+
+            <tbody>
+
+                {% for p in patients %}
+
+                <tr
+                    data-search="{{ p.name }} {{ p.department }} {{ p.record }}">
+
+                    <td>
+
+                        <div class="person">
+
+                            <div class="avatar">
+                                {{ p.name[0] }}
+                            </div>
+
+                            <div>
+
+                                <strong>
+                                    {{ p.name }}
+                                </strong>
+
+                                <small>
+                                    ID #{{ '%04d'|format(p.id) }}
+                                </small>
+
+                            </div>
+
+                        </div>
+
+                    </td>
+
+
+                    <td>
+                        {{ p.age }}
+                    </td>
+
+
+                    <td>
+                        {{ p.department }}
+                    </td>
+
+
+                    <td class="muted">
+                        {{ p.record }}
+                    </td>
+
+
+                    <td>
+
+                        <span class="badge {{ p.status|lower }}">
+                            {{ p.status }}
+                        </span>
+
+                    </td>
+
+                </tr>
+
+                {% endfor %}
+
+            </tbody>
+
+        </table>
+
+    </div>
+
+</div>
+
+
+<!-- Add Patient Modal -->
+
+<div class="modal" id="patientModal">
+
+    <div class="modal-box">
+
+        <button
+            class="close"
+            onclick="closeModal('patientModal')">
+            ×
+        </button>
+
+
+        <h2>
+            Add New Patient
+        </h2>
+
+        <p>
+            Enter patient information below.
+        </p>
+
+
+        <form
+            method="POST"
+            action="{{ url_for('add_patient') }}">
+
+            <label>
+
+                Full Name
+
+                <input
+                    name="name"
+                    required>
+
+            </label>
+
+
+            <label>
+
+                Age
+
+                <input
+                    type="number"
+                    name="age"
+                    min="0"
+                    required>
+
+            </label>
+
+
+            <label>
+
+                Department
+
+                <select
+                    name="department"
+                    required>
+
+                    {% for d in departments %}
+
+                    <option>
+                        {{ d.name }}
+                    </option>
+
+                    {% endfor %}
+
+                </select>
+
+            </label>
+
+
+            <label>
+
+                Medical Record
+
+                <textarea
+                    name="record"
+                    rows="3"
+                    placeholder="Enter medical information"></textarea>
+
+            </label>
+
+
+            <label>
+
+                Status
+
+                <select name="status">
+
+                    <option>Active</option>
+                    <option>Critical</option>
+                    <option>Discharged</option>
+
+                </select>
+
+            </label>
+
+
+            <button class="primary full">
+                Add Patient
+            </button>
+
+        </form>
+
+    </div>
+
+</div>
+
+
+<script>
+
+    function openModal(id) {
+        document
+            .getElementById(id)
+            .classList
+            .add('show');
+    }
+
+
+    function closeModal(id) {
+        document
+            .getElementById(id)
+            .classList
+            .remove('show');
+    }
+
+</script>
+
+
+{% endblock %}
+

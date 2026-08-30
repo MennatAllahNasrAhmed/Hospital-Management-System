@@ -1,4 +1,4 @@
-from Hospital_Magement_System.department import Department
+from department import Department
 
 
 class Hospital:

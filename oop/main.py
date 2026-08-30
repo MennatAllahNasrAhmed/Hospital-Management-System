@@ -1,7 +1,7 @@
-from Hospital_Magement_System.hospital import Hospital
-from Hospital_Magement_System.department import Department
-from Hospital_Magement_System.patient import Patient
-from Hospital_Magement_System.staff import Staff
+from hospital import Hospital
+from department import Department
+from patient import Patient
+from staff import Staff
 
 def display_menu():
     print("\n" + "="*35)

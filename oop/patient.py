@@ -1,4 +1,4 @@
-from Hospital_Magement_System.person import Person
+from person import Person
 
 
 class Patient(Person):
